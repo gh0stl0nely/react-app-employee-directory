@@ -4,7 +4,6 @@ import "./style.css";
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css';
 
-
 class Buttons extends React.Component{
 
     componentDidMount(){
@@ -19,12 +18,12 @@ class Buttons extends React.Component{
             <div>
                 <div style={{textAlign: "center"}}>
                             <span>
-                                <SortButton />
-                                <FilterButton />
+                                <SortButton getSortData={this.props.getSortData}/>
+                                <FilterButton getFilterData={this.props.getFilterData} />
                             </span>
                 </div>
                 <div>
-                    <ClearOptionsButton />
+                    <ClearOptionsButton clearOptions={this.props.clearOptions}/>
                 </div>
             </div>
         
@@ -32,11 +31,11 @@ class Buttons extends React.Component{
     }
 }
 
-function SortButton(){
+function SortButton(props){
     return (
-        <div style={{margin: "0 auto", width: "50%", marginTop: "40px"}} class="input-field col s12">
-            <select multiple>
-                <option value="" disabled></option>
+        <div style={{margin: "0 auto", width: "50%", marginTop: "40px"}} className="input-field col s12">
+            <select onChange={props.getSortData}>
+                <option value="" disabled defaultValue></option>
                 <option value="id">ID</option>
                 <option value="name">Name</option>
                 <option value="title">Title</option>
@@ -45,14 +44,15 @@ function SortButton(){
                 <option value="department">Department</option>
             </select>
             <label style={{fontSize: "12px"}}>Sort by</label>
+            
         </div>
     )
 }
 
-function FilterButton(){
+function FilterButton(props){
     return (
-        <div style={{margin: "0 auto", width: "50%",  marginTop: "40px"}} class="input-field col s12">
-            <select multiple>
+        <div style={{margin: "0 auto", width: "50%",  marginTop: "40px"}} className="input-field col s12">
+            <select multiple onChange={props.getFilterData}>
                 <option value="" disabled></option>
                 <option value="id">ID</option>
                 <option value="name">Name</option>
@@ -70,7 +70,7 @@ function AddEmployeeButton(props){
 
     return (
         <div className="centeredEl">
-            <button data-target="addModal" class="btn modal-trigger">Add Employee</button>
+            <button data-target="addModal" className="btn modal-trigger">Add Employee</button>
             <Modal addEmployee={props.addEmployee}/>
         </div>
     )
@@ -87,7 +87,7 @@ function ClearTableButton(props){
 function ClearOptionsButton(props){
     return (
         <div className="centeredEl">
-            <button style={{backgroundColor: "blue"}} className="waves-effect waves-light btn">Clear Options</button>
+            <button style={{backgroundColor: "blue"}} onClick={props.clearOptions} className="waves-effect waves-light btn">Clear Options</button>
         </div>
     )
 }

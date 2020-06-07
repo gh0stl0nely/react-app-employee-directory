@@ -38,8 +38,8 @@ class Modal extends React.Component{
 
     render(){
         return(
-            <div id="addModal" class="modal">
-                    <div class="modal-content">
+            <div id="addModal" className="modal">
+                    <div className="modal-content">
                         <h4>Add new employee to directory</h4>
                         <form onSubmit={(e) => {this.props.addEmployee(e); this.resetState()}}>
                             <input placeholder="Name" onChange={this.handleChange} name="name" type="text" value={this.state.name}/>
@@ -47,7 +47,7 @@ class Modal extends React.Component{
                             <input placeholder="Phone" onChange={this.handleChange} name="phone" type="text" value={this.state.phone}/>
                             <input placeholder="Email" onChange={this.handleChange} name="email" type="text" value={this.state.email}/>
                             <input placeholder="Department" onChange={this.handleChange} name="department" type="text" value={this.state.department}/>
-                            <button class="modal-close waves-effect waves-green btn">Add</button>
+                            <button className="modal-close waves-effect waves-green btn">Add</button>
                         </form> 
                     </div>
             </div>
