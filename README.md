@@ -4,7 +4,7 @@ A simple web application that mirrors an employee directory that allows managers
 
 ## Demo
 
-Test the app -> [Demo](https://react-dog-app-x.herokuapp.com/)
+Test the app -> [Demo](https://react-employee-directory-1.herokuapp.com/)
 
 ## Built With
 
