@@ -20,9 +20,11 @@ class Buttons extends React.Component{
                             <span>
                                 <SortButton getSortData={this.props.getSortData}/>
                                 <FilterButton getFilterData={this.props.getFilterData} />
+                                <RadioButton getSortChoice={this.props.getSortChoice} />
                             </span>
                 </div>
                 <div>
+                    <p style={{textAlign: "center"}}><strong>Note:</strong> The first four elements are there for testing. Clearing the table without adding new employees will bring back the 4 default values.</p>
                     <ClearOptionsButton clearOptions={this.props.clearOptions}/>
                 </div>
             </div>
@@ -35,13 +37,13 @@ function SortButton(props){
     return (
         <div style={{margin: "0 auto", width: "50%", marginTop: "40px"}} className="input-field col s12">
             <select onChange={props.getSortData}>
-                <option value="" disabled defaultValue></option>
-                <option value="id">ID</option>
-                <option value="name">Name</option>
-                <option value="title">Title</option>
-                <option value="phone">Phone</option>
-                <option value="email">Email</option>
-                <option value="department">Department</option>
+                <option value="" disabled selected></option>
+                <option value="ID">ID</option>
+                <option value="Name">Name</option>
+                <option value="Title">Title</option>
+                <option value="Phone">Phone</option>
+                <option value="Email">Email</option>
+                <option value="Department">Department</option>
             </select>
             <label style={{fontSize: "12px"}}>Sort by</label>
             
@@ -54,15 +56,34 @@ function FilterButton(props){
         <div style={{margin: "0 auto", width: "50%",  marginTop: "40px"}} className="input-field col s12">
             <select multiple onChange={props.getFilterData}>
                 <option value="" disabled></option>
-                <option value="id">ID</option>
-                <option value="name">Name</option>
-                <option value="title">Title</option>
-                <option value="phone">Phone</option>
-                <option value="email">Email</option>
-                <option value="department">Department</option>
+                <option value="ID">ID</option>
+                <option value="Name">Name</option>
+                <option value="Title">Title</option>
+                <option value="Phone">Phone</option>
+                <option value="Email">Email</option>
+                <option value="Department">Department</option>
             </select>
             <label style={{fontSize: "12px"}}>Filter By</label>
       </div>
+    )
+}
+
+function RadioButton(props){
+    return (
+        <form onChange={props.getSortChoice}>
+            <p>
+                <label>
+                    <input name="group1" type="radio" value="ascending" defaultChecked/>
+                    <span style={{color: "black"}}>Ascending Order</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input name="group1" type="radio" value="decending" />
+                    <span style={{color: "black"}}>Decending Order</span>
+                </label>
+            </p>
+        </form>
     )
 }
 

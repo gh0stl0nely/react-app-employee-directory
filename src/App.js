@@ -7,7 +7,8 @@ class App extends React.Component {
 
   state = {
     sortBy : [],
-    filterBy: []
+    filterBy: [],
+    isAscendingOrder: true
   }
 
   getFilterOptions = (e) => {
@@ -41,6 +42,19 @@ class App extends React.Component {
     });
   }
 
+  getSortChoice = (e) => {
+    if(e.target.value === "ascending"){
+      this.setState({
+        isAscendingOrder: true
+      })
+    } else {
+      this.setState({
+        isAscendingOrder: false
+      })
+    }
+    
+  }
+
   clearOptions = () => {
     window.location.reload();
   }
@@ -49,8 +63,8 @@ class App extends React.Component {
     return (
       <div>
         <Intro />
-        <Buttons clearOptions={this.clearOptions} getFilterData={this.getFilterOptions} getSortData={this.getSortOptions}/>
-        <Table sortOption={this.state.sortBy} filterOption={this.state.filterBy}/>
+        <Buttons clearOptions={this.clearOptions} getSortChoice={this.getSortChoice} getFilterData={this.getFilterOptions} getSortData={this.getSortOptions}/>
+        <Table sortOption={this.state.sortBy} sortChoice={this.state.isAscendingOrder} filterOption={this.state.filterBy}/>
       </div>
     );
   }

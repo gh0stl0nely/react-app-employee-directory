@@ -4,35 +4,35 @@ import {ClearTableButton, AddEmployeeButton} from './Buttons';
 class Table extends React.Component {
 
     state = {
-        id: 5,
+        id: 4,
         employees: [{
-            id: 1,
-            name: "John",
-            title: "Software Engineer",
-            phone: 70723285,
-            email: "john@email.com",
-            department: "Engineer"
+            ID: 1,
+            Name: "John",
+            Title: "Software Engineer",
+            Phone: 70723285,
+            Email: "john@email.com",
+            Department: "Engineer"
         },{
-            id: 2,
-            name: "Lukas",
-            title: "Backend Engineer",
-            phone: 324242525,
-            email: "lukas@email.com",
-            department: "Development"
+            ID: 2,
+            Name: "Lukas",
+            Title: "Backend Engineer",
+            Phone: 324242525,
+            Email: "lukas@email.com",
+            Department: "Development"
         },{
-            id: 3,
-            name: "Andrew",
-            title: "Sales Person",
-            phone: 21342414,
-            email: "andrew@email.com",
-            department: "Sales"
+            ID: 3,
+            Name: "Andrew",
+            Title: "Sales Person",
+            Phone: 21342414,
+            Email: "andrew@email.com",
+            Department: "Sales"
         },{
-            id: 4,
-            name: "Zebra",
-            title: "CEO",
-            phone: 2398103,
-            email: "zebra@email.com",
-            department: "Board of Director"
+            ID: 4,
+            Name: "Zebra",
+            Title: "CEO",
+            Phone: 2398103,
+            Email: "zebra@email.com",
+            Department: "Board of Director"
         }],
     }
 
@@ -42,7 +42,7 @@ class Table extends React.Component {
         if(previousState){
             // Update state
             this.setState({
-                id: this.state.id + previousState.id,
+                id: previousState.id,
                 employees: previousState.employees,
             });
         }
@@ -50,19 +50,19 @@ class Table extends React.Component {
 
     componentDidMount(){
         this.renderFields([]);
-        this.renderEmployee([],[]);
+        this.renderEmployee([],[], true);
     }
 
 
     addEmployee = (e) => {
         e.preventDefault();
         const newEmployee = {
-            id: this.state.id,
-            name: e.target.name.value,
-            title: e.target.title.value,
-            phone: e.target.phone.value,
-            email: e.target.email.value,
-            department: e.target.department.value
+            ID: this.state.id + 1,
+            Name: e.target.name.value,
+            Title: e.target.title.value,
+            Phone: e.target.phone.value,
+            Email: e.target.email.value,
+            Department: e.target.department.value
         }
 
         const newEmployeeList = this.state.employees;
@@ -71,16 +71,18 @@ class Table extends React.Component {
         this.setState({
             id: this.state.id + 1,
             employees: newEmployeeList,
+        },function(){
+            localStorage.setItem("state", JSON.stringify(this.state));
         });
 
-        localStorage.setItem("state", JSON.stringify(this.state));
+        
     }
 
     clearTable = (e) => {
         e.preventDefault();
         localStorage.removeItem("state");
         this.setState({
-            id: 1,
+            id: 0,
             employees: []
         });
     }
@@ -108,9 +110,9 @@ class Table extends React.Component {
         }       
     }
 
-    renderEmployee = (filterOption, sortOption) => {
+    renderEmployee = (filterOption, sortOption, sortChoice) => {
         // Sort first
-        const sortedData = sortData(this.state.employees,sortOption[0]); // Sort By Data can be extended to multiple values
+        const sortedData = sortData(this.state.employees,sortOption[0], sortChoice); // Sort By Data can be extended to multiple values
         const filteredData = filterData(sortedData, filterOption);
 
         return filteredData;
@@ -124,7 +126,7 @@ class Table extends React.Component {
                         {this.renderFields(this.props.filterOption)}
                     </thead>
                     <tbody>
-                        {this.renderEmployee(this.props.filterOption, this.props.sortOption)}
+                        {this.renderEmployee(this.props.filterOption, this.props.sortOption, this.props.sortChoice)}
                     </tbody>
                 </table>
                 <AddEmployeeButton  addEmployee={this.addEmployee}/>
@@ -135,10 +137,15 @@ class Table extends React.Component {
 }
 
 // Helpers
-function sortData(data,property){
+function sortData(data,property, isAscending){
+    console.log(isAscending);
     if(data.length >= 0 && property){
-        // Asecending order 
-        return (property === "phone" || property === "id") ? data.sort((a,b) => a[property] - b[property]) : data.sort((a, b) => a[property].localeCompare(b[property]));
+        if(isAscending){
+            // Asecending order 
+            return (property === "Phone" || property === "ID") ? data.sort((a,b) => a[property] - b[property]) : data.sort((a, b) => a[property].localeCompare(b[property]));
+        } else {
+            return (property === "Phone" || property === "ID") ? data.sort((a,b) => b[property] - a[property]) : data.sort((a, b) => b[property].localeCompare(a[property]));
+        }
     } else {
         // If no sort option then no need to do so
         return data;
@@ -150,12 +157,12 @@ function filterData(sortedData, filterOption){
         return sortedData.map(employee => {
             return (
                 <tr>
-                    <td>{employee.id}</td>
-                    <td>{employee.name}</td>
-                    <td>{employee.title}</td>
-                    <td>{employee.phone}</td>
-                    <td>{employee.email}</td>
-                    <td>{employee.department}</td>
+                    <td>{employee.ID}</td>
+                    <td>{employee.Name}</td>
+                    <td>{employee.Title}</td>
+                    <td>{employee.Phone}</td>
+                    <td>{employee.Email}</td>
+                    <td>{employee.Department}</td>
                 </tr>
             )
         })
@@ -167,7 +174,6 @@ function filterData(sortedData, filterOption){
         const children = [];
         for(let i = 0; i < keys.length; i++){
             if(filterOption.includes(keys[i])){
-                console.log(employee[keys[i]]);
                 const child = React.createElement("td", {}, employee[keys[i]])
                 children.push(child);
             }
