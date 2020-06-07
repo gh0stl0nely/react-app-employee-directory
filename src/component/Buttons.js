@@ -24,8 +24,8 @@ class Buttons extends React.Component{
                             </span>
                 </div>
                 <div>
-                    <p style={{textAlign: "center"}}><strong>Note:</strong> The first four elements are there for testing. Clearing the table without adding new employees will bring back the 4 default values.</p>
                     <ClearOptionsButton clearOptions={this.props.clearOptions}/>
+                    <p style={{textAlign: "center"}}><strong>Note:</strong> The first four elements are there for testing. Clearing the table without adding new employees will bring back the 4 default values.</p>
                 </div>
             </div>
         

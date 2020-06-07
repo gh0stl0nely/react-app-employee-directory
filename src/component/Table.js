@@ -56,13 +56,25 @@ class Table extends React.Component {
 
     addEmployee = (e) => {
         e.preventDefault();
+        const id = this.state.id + 1;
+        const name = e.target.name.value.trim();
+        const title = e.target.title.value.trim();
+        const phone = e.target.phone.value.trim();
+        const email = e.target.email.value.trim();
+        const department = e.target.department.value.trim();
+
+        if(name === "" || title === "" || phone === "" || email === "" || department === ""){
+            alert("Please don't leave any fields empty.");
+            return;
+        }
+
         const newEmployee = {
-            ID: this.state.id + 1,
-            Name: e.target.name.value,
-            Title: e.target.title.value,
-            Phone: e.target.phone.value,
-            Email: e.target.email.value,
-            Department: e.target.department.value
+            ID: id,
+            Name: name,
+            Title: title,
+            Phone: phone,
+            Email: email,
+            Department: department
         }
 
         const newEmployeeList = this.state.employees;
